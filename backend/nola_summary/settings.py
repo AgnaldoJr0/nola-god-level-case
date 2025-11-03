@@ -1,3 +1,4 @@
+from datetime import timedelta
 import os
 import dotenv
 from pathlib import Path
@@ -17,10 +18,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # 3rd‑party
     "rest_framework",
     "drf_yasg",
-    # sua app
     "summary",
 ]
 
@@ -69,8 +68,7 @@ DATABASES = {
 # -------------------------------------------------
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
-        "rest_framework_simplejwt.authentication.JWTAuthentication"
+        "rest_framework.permissions.AllowAny"
     ]
 }
 
