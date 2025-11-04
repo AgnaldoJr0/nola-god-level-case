@@ -32,7 +32,6 @@
 <script setup>
 import { ref, watch } from "vue";
 import { summarizeQuestion } from "@/api/summary";
-import { useSummaryStore } from "@/store/summary"; // opcional, pode usar props
 
 const emit = defineEmits(["summary"]);
 

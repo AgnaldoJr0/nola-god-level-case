@@ -2,18 +2,21 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
-  root: 'frontend',
+  // serve the frontend folder itself when running from inside frontend/
+  root: '.',
   plugins: [vue()],
   build: {
     rollupOptions: {
-      input: resolve(__dirname, '/src/main.js'),
+      // simple relative input path
+      input: 'src/main.js',
     },
     outDir: '../dist',
   },
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:8001", 
+        // backend runserver default
+        target: "http://127.0.0.1:8000",
         changeOrigin: true,
         secure: false,
       },

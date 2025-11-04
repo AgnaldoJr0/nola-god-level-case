@@ -12,11 +12,14 @@
       <!-- Exibe o resumo retornado -->
       <summary-card v-if="summary" :summary="summary" />
 
+      <!-- Filtros -->
+      <filter-bar @update:filters="onFilters" />
+
       <!-- Métricas (flexbox, responsivo) -->
       <div class="metrics-grid">
-        <revenue-card />
-        <top-products-card />
-        <peak-hours-card />
+        <revenue-card :filters="filters" />
+        <top-products-card :filters="filters" />
+        <peak-hours-card :filters="filters" />
       </div>
     </el-main>
 
@@ -28,16 +31,22 @@
 
 <script setup>
 import { ref } from "vue";
-import QuestionForm from "./components/QuestionForm.vue";
+import QuestionForm from "./components/QuestionForma.vue";
 import SummaryCard from "./components/SummaryCard.vue";
 import RevenueCard from "./components/RevenueCard.vue";
 import TopProductsCard from "./components/TopProductsCard.vue";
 import PeakHoursCard from "./components/PeakHoursCard.vue";
+import FilterBar from "./components/FilterBar.vue";
 
 const summary = ref("");
+const filters = ref({});
 
 function onSummary(text) {
   summary.value = text;
+}
+
+function onFilters(f) {
+  filters.value = f || {};
 }
 </script>
 

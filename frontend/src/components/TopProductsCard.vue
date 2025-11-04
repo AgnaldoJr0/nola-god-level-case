@@ -13,26 +13,41 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="margin-top: .75rem; text-align: right">
+      <el-button size="mini" @click="onExport">Exportar CSV</el-button>
+    </div>
   </el-card>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { getTopProducts } from "@/api/summary";
+import { onMounted, ref, watch } from "vue";
+import { getTopProducts, exportCsvUrl } from "@/api/summary";
+
+const props = defineProps({ filters: { type: Object, default: () => ({}) } });
 
 const products = ref([]);
 const loading = ref(true);
 
-onMounted(async () => {
+async function load() {
+  loading.value = true;
   try {
-    const data = await getTopProducts();
+    const data = await getTopProducts(props.filters || {});
     products.value = data;
   } catch (e) {
     console.error("Erro ao buscar top products:", e);
   } finally {
     loading.value = false;
   }
-});
+}
+
+onMounted(load);
+watch(() => props.filters, load, { deep: true });
+
+function onExport() {
+  const url = exportCsvUrl('top-products', props.filters || {});
+  // open in new tab to download
+  window.open(url, '_blank');
+}
 </script>
 
 <style scoped>

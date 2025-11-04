@@ -12,15 +12,18 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { getPeakHours } from "@/api/summary";
+
+const props = defineProps({ filters: { type: Object, default: () => ({}) } });
 
 const hours = ref([]);
 const loading = ref(true);
 
-onMounted(async () => {
+async function load() {
+  loading.value = true;
   try {
-    const data = await getPeakHours();
+    const data = await getPeakHours(props.filters || {});
     // Normaliza: garante que todas as 24 horas existam (0‑23)
     const map = new Map(data.map(d => [d.hour, d.count]));
     const full = Array.from({ length: 24 }, (_, i) => ({
@@ -33,7 +36,10 @@ onMounted(async () => {
   } finally {
     loading.value = false;
   }
-});
+}
+
+onMounted(load);
+watch(() => props.filters, load, { deep: true });
 </script>
 
 <style scoped>
