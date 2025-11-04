@@ -55,11 +55,11 @@ WSGI_APPLICATION = "nola_summary.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("POSTGRES_DB"),
-        "USER": os.getenv("POSTGRES_USER"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": os.getenv("POSTGRES_HOST"),
-        "PORT": os.getenv("POSTGRES_PORT"),
+        "NAME": "challenge_db",
+        "USER": "challenge",
+        "PASSWORD": "challenge_2024",
+        "HOST": "localhost",
+        "PORT": "5439",
     }
 }
 
